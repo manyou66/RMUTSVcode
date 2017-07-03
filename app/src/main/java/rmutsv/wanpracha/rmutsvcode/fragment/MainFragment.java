@@ -15,6 +15,13 @@ import rmutsv.wanpracha.rmutsvcode.R;
  */
 
 public class MainFragment extends Fragment{
+     //store old data
+    public static MainFragment mainInstance(){
+        MainFragment mainFragment = new MainFragment();
+        Bundle bundle = new Bundle();
+        mainFragment.setArguments(bundle);
+        return mainFragment;
+    }
 
     @Nullable
     @Override

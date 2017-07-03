@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import rmutsv.wanpracha.rmutsvcode.R;
 
@@ -31,5 +32,22 @@ public class NewRegisterFragment extends Fragment{
         View view = inflater.inflate(R.layout.new_register_fragment_layout, container, false);
 
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        //Back Controller
+        ImageView imageView = (ImageView) getView().findViewById(R.id.btnBack);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.relContent, MainFragment.mainInstance())
+                        .commit();
+            }
+        });
+
     }
 }  //Main Class
