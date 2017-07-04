@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import rmutsv.wanpracha.rmutsvcode.MyAlert;
+import rmutsv.wanpracha.rmutsvcode.PostUserToServer;
 import rmutsv.wanpracha.rmutsvcode.R;
 
 /**
@@ -79,11 +80,14 @@ public class NewRegisterFragment extends Fragment{
                 } else {
                     // No Space
                     Log.d("4JulyV1", "No Space");
+                    uploadNewUserToServer(strName, strUser, strPassword);
                 }
             } //OnClick
         });
 
     }
+
+
 
     private void backController() {
         ImageView imageView = (ImageView) getView().findViewById(R.id.btnBack);
@@ -96,4 +100,40 @@ public class NewRegisterFragment extends Fragment{
             }
         });
     }
+
+    private void uploadNewUserToServer(String strName, String strUser, String strPassword) {
+
+        try {
+
+            PostUserToServer postUserToServer = new PostUserToServer(getActivity());
+            postUserToServer.execute(strName, strUser, strPassword);
+
+            String result = postUserToServer.get();
+            Log.d("4JulyV1", "result ==>" + result);
+
+            if (Boolean.parseBoolean(result)) {
+
+                backHome();
+
+            } else {
+
+                MyAlert myAlert = new MyAlert(getActivity());
+                myAlert.myDialog("Cannot Upload Value",
+                        "Please Try Again Cannot Upload Value to Server");
+            }
+
+        } catch (Exception e) {
+            Log.d("4JulyV1", "e upload ==>" + e.toString());
+        }
+
+
+    }
+
+    private void backHome() {
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.relContent, MainFragment.mainInstance())
+                .commit();
+    }
+
+
 }  //Main Class
